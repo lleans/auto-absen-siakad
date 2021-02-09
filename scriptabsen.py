@@ -26,7 +26,8 @@ def runscript(email, password, browser):
         browser.close()
         return False
 
-    temp = browser.find_element_by_class_name("number")
+    time.sleep(1)
+    temp = browser.find_element_by_class_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
     if(temp.text == 'Masuk'):
         browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
         browser.close()
@@ -38,7 +39,7 @@ def runscript(email, password, browser):
         simpan.click()
 
         browser.refresh()
-        tmp = browser.find_element_by_class_name("number")
+        tmp = browser.find_element_by_class_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
         if(tmp.text == 'Masuk'):
             browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
             browser.close()
