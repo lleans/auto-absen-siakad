@@ -20,6 +20,8 @@ def runscript(email, password, browser):
     passinput.send_keys(str(password))
     enter.click()
 
+    time.sleep(2)
+
     try:
         browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
     except:
@@ -27,7 +29,7 @@ def runscript(email, password, browser):
         return False
 
     time.sleep(1)
-    temp = browser.find_element_by_class_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
+    temp = browser.find_element_by_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
     if(temp.text == 'Masuk'):
         browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
         browser.close()
@@ -39,7 +41,7 @@ def runscript(email, password, browser):
         simpan.click()
 
         browser.refresh()
-        tmp = browser.find_element_by_class_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
+        tmp = browser.find_element_by_xpath("//section[2]/div[2]/div/div/div[2]/div[2]")
         if(tmp.text == 'Masuk'):
             browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
             browser.close()
