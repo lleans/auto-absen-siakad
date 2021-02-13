@@ -11,8 +11,10 @@ def runscript(email, password, browser):
         browser.close()
         return False
 
-    emailinput = browser.find_element_by_class_name('email')
-    passinput = browser.find_element_by_class_name('password')
+    emailinput = browser.find_element_by_xpath(
+        '//*[@id="form_login"]/div[2]/div/input')
+    passinput = browser.find_element_by_xpath(
+        '//*[@id="form_login"]/div[3]/div/input')
     enter = browser.find_element_by_id('masuk')
 
     emailinput.send_keys(str(email))
@@ -21,32 +23,42 @@ def runscript(email, password, browser):
 
     time.sleep(2)
 
-    browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
-
-    WIB = pytz.timezone('Asia/Jakarta')
-    time_now = datetime.now(WIB)
-
-    while(time_now.strftime('%H') == '06' and
-          time_now.strftimr('%M') == '00'):
-        browser.refresh()
-        temp = browser.find_element_by_class_name('number')
-        if(temp.text == 'Masuk'):
-            browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
-            browser.close()
+    if cek_absen(browser) == False:
+        absen(browser)
+        if cek_absen(browser) == True:
+            logout(browser)
             return True
         else:
-            inputabsen = browser.find_element_by_xpath(
-                "//section[2]/div[2]/div[2]/form/div/div[2]/div[1]/label[1]")
-            simpan = browser.find_element_by_id("simpan")
-            inputabsen.click()
-            simpan.click()
+            logout(browser)
+            return False
+    else:
+        return True
 
-            browser.refresh()
-            tmp = browser.find_element_by_class_name('number')
-            if(tmp.text == 'Masuk'):
-                browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
-                browser.close()
-                return True
-            else:
-                browser.close()
-                return False
+
+def absen(browser):
+    inputabsen = browser.find_element_by_xpath(
+        "/html/body/section[2]/div[2]/div[2]/form/div/div[2]/div[1]/label[1]")
+    simpan = browser.find_element_by_id("simpan")
+    inputabsen.click()
+    simpan.click()
+
+
+def cek_absen(browser):
+    browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
+    tmp = browser.find_element_by_class_name('number')
+    if(tmp.text == 'Masuk'):
+        return True
+    else:
+        return False
+
+
+def logout(browser):
+    browser.get("https://siswa.smktelkom-mlg.sch.id/login/logout")
+    browser.close()
+
+
+def override(email, password, browser):
+    while True:
+        data = runscript(email, password, browser)
+        if data == True:
+            return True

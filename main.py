@@ -12,16 +12,18 @@ while True:
     WIB = pytz.timezone('Asia/Jakarta')
     time_now = datetime.now(WIB)
 
-    if(time_now.strftime('%H') == '05' and
-            time_now.strftime('%M') == '58' and
+    if (time_now.strftime('%H') == '06' and
+            time_now.strftime('%M') == '00' and
             time_now.strftime('%a') != 'Sat' and
             time_now.strftime('%a') != 'Sun'):
         temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
         if(temp == True):
             print("Absen berhasil pada " + time_now.strftime('%c'))
-            tmp = True;
         elif(temp == False):
-            print("Absen gagal, SERVER SEKOLAH KENTANK " +
+            print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi" +
                   time_now.strftime('%c'))
+            ass = scriptabsen.override(values.email(), values.password(), values.browser())
+            if ass == True:
+                print("Absen berhasil pada " + time_now.strftime('%c'))
         else:
             print("Server-mu Down " + time_now.strftime('%c'))
