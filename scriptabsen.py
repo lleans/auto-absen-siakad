@@ -23,16 +23,22 @@ def runscript(email, password, browser):
 
     time.sleep(2)
 
-    if cek_absen(browser) == False:
-        absen(browser)
-        if cek_absen(browser) == True:
-            logout(browser)
-            return True
-        else:
-            logout(browser)
-            return False
-    else:
-        return True
+    browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
+
+    while True:
+        WIB = pytz.timezone('Asia/Jakarta')
+        time_now = datetime.now(WIB)
+        if time_now.strftime('%H') == '06' and time_now.strftime('%M') == '00':
+            if cek_absen(browser) == False:
+                absen(browser)
+                if cek_absen(browser) == True:
+                    logout(browser)
+                    return True
+                else:
+                    logout(browser)
+                    return False
+            else:
+                return True
 
 
 def absen(browser):
@@ -44,7 +50,6 @@ def absen(browser):
 
 
 def cek_absen(browser):
-    browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
     tmp = browser.find_element_by_class_name('number')
     if(tmp.text == 'Masuk'):
         return True
