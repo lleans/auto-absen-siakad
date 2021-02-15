@@ -1,6 +1,7 @@
 from selenium import webdriver
 import pytz
-from time import time, sleep
+import time
+from time import sleep
 from datetime import datetime
 
 
