@@ -1,7 +1,7 @@
-import time
 from selenium import webdriver
 import pytz
-import datetime
+from time import time, sleep
+from datetime import datetime
 
 
 def runscript(email, password, browser):
