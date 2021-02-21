@@ -16,7 +16,10 @@ while True:
             time_now.strftime('%M') == '58' and
             time_now.strftime('%a') != 'Sat' and
             time_now.strftime('%a') != 'Sun'):
-        temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
+        try:
+            temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
+        except:
+            temp = False
         if(temp == True):
             print("Absen berhasil pada " + time_now.strftime('%c'))
         elif(temp == False):

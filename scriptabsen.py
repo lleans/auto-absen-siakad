@@ -67,6 +67,9 @@ def logout(browser):
 
 def override(email, password, browser):
     while True:
-        data = runscript(email, password, browser)
+        try:
+            data = runscript(email, password, browser)
+        except:
+            pass
         if data == True:
             return True
