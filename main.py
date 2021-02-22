@@ -17,13 +17,15 @@ while True:
             time_now.strftime('%a') != 'Sat' and
             time_now.strftime('%a') != 'Sun'):
         temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
+        times = datetime.now(WIB)
         if(temp == True):
-            print("Absen berhasil pada " + time_now.strftime('%c'))
+            print("Absen berhasil pada " + times.strftime('%c'))
         elif(temp == False):
             print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi " +
-                  time_now.strftime('%c'))
+                  times.strftime('%c'))
             ass = scriptabsen.override(values.email(), values.password(), values.browser())
             if ass == True:
-                print("Absen berhasil pada " + time_now.strftime('%c'))
+                timee = datetime.now(WIB)
+                print("Absen berhasil pada " + timee.strftime('%c'))
         else:
-            print("Server-mu Down " + time_now.strftime('%c'))
+            print("Server-mu Down " + times.strftime('%c'))
