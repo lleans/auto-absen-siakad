@@ -33,6 +33,7 @@ def runscript(email, password, browser):
             browser.refresh()
             if cek_absen(browser) == False:
                 absen(browser)
+                browser.refresh()
                 if cek_absen(browser) == True:
                     logout(browser)
                     return True
@@ -67,9 +68,6 @@ def logout(browser):
 
 def override(email, password, browser):
     while True:
-        try:
-            data = runscript(email, password, browser)
-        except:
-            pass
+        data = runscript(email, password, browser)
         if data == True:
             return True

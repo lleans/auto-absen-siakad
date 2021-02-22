@@ -16,14 +16,11 @@ while True:
             time_now.strftime('%M') == '58' and
             time_now.strftime('%a') != 'Sat' and
             time_now.strftime('%a') != 'Sun'):
-        try:
-            temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
-        except:
-            temp = False
+        temp = scriptabsen.runscript(values.email(), values.password(), values.browser())
         if(temp == True):
             print("Absen berhasil pada " + time_now.strftime('%c'))
         elif(temp == False):
-            print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi" +
+            print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi " +
                   time_now.strftime('%c'))
             ass = scriptabsen.override(values.email(), values.password(), values.browser())
             if ass == True:
