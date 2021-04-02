@@ -4,20 +4,12 @@ from selenium import webdriver
 #
 #
 # Emailmu Si AKAD blyat
-Email = ""
+email = ""
 #
 #
 #
 # Passwordmu Si AKAD blyat
-Password = ""
-
-
-def email():
-    return Email
-
-
-def password():
-    return Password
+password = ""
 
 def browser():
     chromes = webdriver.ChromeOptions()

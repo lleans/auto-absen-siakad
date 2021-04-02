@@ -1,7 +1,5 @@
-from selenium import webdriver
 import pytz
 import time
-from time import sleep
 from datetime import datetime
 
 
@@ -27,13 +25,10 @@ def runscript(email, password, browser):
     browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
 
     while True:
-        WIB = pytz.timezone('Asia/Jakarta')
-        time_now = datetime.now(WIB)
-        if time_now.strftime('%H') == '06' and time_now.strftime('%M') == '00':
-            browser.refresh()
+        time_now = datetime.now(pytz.timezone('Asia/Jakarta'))
+        if time_now.strftime('%H') == '06':
             if cek_absen(browser) == False:
                 absen(browser)
-                browser.refresh()
                 if cek_absen(browser) == True:
                     logout(browser)
                     return True
@@ -54,6 +49,7 @@ def absen(browser):
 
 
 def cek_absen(browser):
+    browser.refresh()
     tmp = browser.find_element_by_class_name('number')
     if(tmp.text == 'Masuk'):
         return True
@@ -68,6 +64,5 @@ def logout(browser):
 
 def override(email, password, browser):
     while True:
-        data = runscript(email, password, browser)
-        if data == True:
+        if runscript(email, password, browser) == True:
             return True
