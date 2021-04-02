@@ -12,14 +12,15 @@ while True:
     time_now = datetime.now(WIB)
 
     if time_now.strftime('%H') == '05' and time_now.strftime('%M') == '58' and time_now.strftime('%a') != 'Sat' and time_now.strftime('%a') != 'Sun':
-        temp = script.runscript(values.email, values.password, values.browser())
-        times = datetime.now(WIB)
-        if(temp == True):
-            print("Absen berhasil pada", times.strftime('%c'))
-        elif(temp == False):
-            print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi",
-                  times.strftime('%c'))
-            if script.override(values.email, values.password, values.browser()) == True:
-                print("Absen berhasil pada " + datetime.now(WIB).strftime('%c'))
-        else:
-            print("Server-mu Down " + times.strftime('%c'))
+        try:
+            temp = script.runscript(values.email, values.password, values.browser())
+            times = datetime.now(WIB)
+            if(temp == True):
+                print("Absen berhasil pada", times.strftime('%c'))
+            elif(temp == False):
+                print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi",
+                    times.strftime('%c'))
+                if script.override(values.email, values.password, values.browser()) == True:
+                    print("Absen berhasil pada", datetime.now(WIB).strftime('%c'))
+        except:
+            print("Server-mu Down", datetime.now(WIB).strftime('%c'))
