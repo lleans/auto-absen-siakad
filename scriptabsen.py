@@ -27,31 +27,31 @@ def runscript(email, password, browser):
     while True:
         time_now = datetime.now(pytz.timezone('Asia/Jakarta'))
         if time_now.strftime('%H') == '06':
-            if cek_absen(browser) == False:
-                absen(browser)
-                if cek_absen(browser) == True:
-                    logout(browser)
-                    return True
-                else:
-                    logout(browser)
-                    return False
-            else:
+            absen(browser)
+            if cek_absen(browser):
                 logout(browser)
                 return True
+            else:
+                logout(browser)
+                return False
 
 
 def absen(browser):
-    inputabsen = browser.find_element_by_xpath(
-        "/html/body/section[2]/div[2]/div[2]/form/div/div[2]/div[1]/label[1]")
-    simpan = browser.find_element_by_id("simpan")
-    inputabsen.click()
-    simpan.click()
+    try:
+        browser.refresh()
+        inputabsen = browser.find_element_by_xpath(
+            "/html/body/section[2]/div[2]/div[2]/form/div/div[2]/div[1]/label[1]")
+        simpan = browser.find_element_by_id("simpan")
+        inputabsen.click()
+        simpan.click()
+    except:
+        return False
 
 
 def cek_absen(browser):
     browser.refresh()
     tmp = browser.find_element_by_class_name('number')
-    if(tmp.text == 'Masuk'):
+    if tmp.text == 'Masuk':
         return True
     else:
         return False
