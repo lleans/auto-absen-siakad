@@ -15,9 +15,9 @@ while True:
         try:
             temp = script.runscript(values.email, values.password, values.browser())
             times = datetime.now(WIB)
-            if(temp == True):
+            if temp:
                 print("Absen berhasil pada", times.strftime('%c'))
-            elif(temp == False):
+            else:
                 print("Absen gagal, SERVER SEKOLAH KENTANK, mencoba lagi",
                     times.strftime('%c'))
                 if script.override(values.email, values.password, values.browser()) == True:
