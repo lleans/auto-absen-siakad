@@ -10,51 +10,51 @@ def runscript(email, password, browser):
         browser.close()
         return False
 
-    emailinput = browser.find_element_by_xpath(
-        '//*[@id="form_login"]/div[2]/div/input')
-    passinput = browser.find_element_by_xpath(
-        '//*[@id="form_login"]/div[3]/div/input')
-    enter = browser.find_element_by_id('masuk')
+    emailinput, passinput, enter = browser.find_element_by_name('email'), browser.find_element_by_name('password'), browser.find_element_by_id('masuk')
 
     emailinput.send_keys(str(email))
     passinput.send_keys(str(password))
     enter.click()
 
-    time.sleep(2)
+    time.sleep(1)
 
-    browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
+    try:
+        browser.get("https://siswa.smktelkom-mlg.sch.id/presnow")
+    except:
+        browser.close()
+        return False
 
     while True:
         time_now = datetime.now(pytz.timezone('Asia/Jakarta'))
         if time_now.strftime('%H') == '06':
-            absen(browser)
-            if cek_absen(browser):
-                logout(browser)
-                return True
-            else:
-                logout(browser)
-                return False
+            return absen(browser)
 
 
 def absen(browser):
     try:
         browser.refresh()
-        inputabsen = browser.find_element_by_xpath(
-            "/html/body/section[2]/div[2]/div[2]/form/div/div[2]/div[1]/label[1]")
-        simpan = browser.find_element_by_id("simpan")
+        inputabsen, simpan = browser.find_element_by_xpath('//label[@for="M"]'), browser.find_element_by_id("simpan")
         inputabsen.click()
         simpan.click()
     except:
-        return False
+        pass
+
+    return cek_absen(browser)
+    
 
 
 def cek_absen(browser):
-    browser.refresh()
-    tmp = browser.find_element_by_class_name('number')
-    if tmp.text == 'Masuk':
-        return True
-    else:
-        return False
+    try:
+        tmp = browser.find_element_by_class_name('number')
+        if tmp.text == 'Masuk':
+            logout(browser)
+            return True
+        else:
+            logout(browser)
+            return False
+    except:
+        browser.refresh()
+        return cek_absen(browser)
 
 
 def logout(browser):

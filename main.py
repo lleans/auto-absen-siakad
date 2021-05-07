@@ -10,8 +10,8 @@ while True:
     time.sleep(5)
     WIB = pytz.timezone('Asia/Jakarta')
     time_now = datetime.now(WIB)
-
-    if time_now.strftime('%H') == '05' and time_now.strftime('%M') == '58' and time_now.strftime('%a') != 'Sat' and time_now.strftime('%a') != 'Sun':
+    
+    if time_now.strftime('%H:%M') == '05:58' and time_now.strftime('%a') != 'Sat' and time_now.strftime('%a') != 'Sun':
         try:
             temp = script.runscript(values.email, values.password, values.browser())
             times = datetime.now(WIB)
